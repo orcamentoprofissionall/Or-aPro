@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101827">
+<meta name="description" content="OrçaPro — orçamentos, clientes e controle financeiro para profissionais.">
+<title>OrçaPro — Gestão profissional</title>
+<style>
+:root{--bg:#f3f5f9;--surface:#fff;--navy:#101827;--navy2:#1b2940;--orange:#ff8a32;--orange2:#fff0e3;--text:#172033;--muted:#7c8799;--line:#e7ebf1;--green:#159b70;--red:#d94b4b;--blue:#4778d8;--shadow:0 12px 32px rgba(16,24,39,.07)}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{background:var(--bg);color:var(--text);padding-bottom:88px}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}
+.app{max-width:1100px;margin:auto;min-height:100vh}
+.top{background:var(--navy);color:#fff;padding:20px 24px 25px;border-radius:0 0 24px 24px}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:11px}.logo{width:42px;height:42px;border-radius:13px;background:var(--orange);color:var(--navy);display:grid;place-items:center;font-weight:950;font-size:22px}
+.brand h1{font-size:22px;letter-spacing:-.8px}.brand h1 span{color:var(--orange)}
+.premium{background:#29374d;color:#ffd49b;border:1px solid #43516a;padding:10px 14px;border-radius:22px;font-size:11px;font-weight:850}
+.hello{margin-top:25px}.hello small{color:#aab5c6;font-size:11px;letter-spacing:1.1px;font-weight:700}.hello h2{font-size:26px;letter-spacing:-.8px;margin-top:6px}.hello h2 span{color:var(--orange)}
+.content{padding:24px 20px;max-width:1000px;margin:auto}
+.page{display:none}.page.active{display:block}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.section-head h2{font-size:20px;letter-spacing:-.5px}.sub{font-size:12px;color:var(--muted);margin-top:4px}
+.btn{padding:12px 15px;border-radius:11px;font-weight:800;font-size:12px;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.primary{background:var(--navy);color:#fff}.accent{background:var(--orange);color:var(--navy)}.light{background:#f1f3f7;color:var(--text)}.danger{background:#fff0f0;color:var(--red)}.outline{border:1px solid var(--line);background:#fff;color:var(--text)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px;box-shadow:0 3px 12px rgba(20,30,50,.025)}
+.stat .label{font-size:11px;color:var(--muted);margin-bottom:10px}.stat strong{font-size:22px;letter-spacing:-.7px;display:block}.stat small{font-size:10px;color:var(--muted);display:block;margin-top:7px}
+.stat.dark{background:var(--navy2);color:#fff;border-color:var(--navy2)}.stat.dark .label,.stat.dark small{color:#bac4d3}
+.panel{background:#fff;border:1px solid var(--line);border-radius:17px;padding:18px;margin-bottom:16px}
+.panel h3{font-size:14px;margin-bottom:14px}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.quick button{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 8px;text-align:left;color:var(--text)}
+.quick .ico{width:35px;height:35px;border-radius:11px;background:var(--orange2);display:grid;place-items:center;color:#e87926;font-size:18px;margin-bottom:10px}
+.quick b{font-size:11px;display:block}.quick small{font-size:10px;color:var(--muted);display:block;margin-top:4px}
+.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:560px}.table th{text-align:left;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.5px;padding:11px 9px;border-bottom:1px solid var(--line)}.table td{padding:13px 9px;border-bottom:1px solid var(--line);font-size:12px}.table tr:last-child td{border-bottom:0}
+.badge{display:inline-block;border-radius:20px;padding:5px 9px;font-size:10px;font-weight:800;background:#f0f2f6;color:#687386}.badge.aprovado,.badge.concluido{background:#e5f7f0;color:#13845e}.badge.pendente{background:#fff3df;color:#b8751a}.badge.cancelado{background:#fff0f0;color:#c34b4b}
+.empty{text-align:center;padding:28px 12px;color:var(--muted);font-size:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{margin-bottom:14px}.field label{display:block;font-size:11px;font-weight:800;color:#536075;margin-bottom:7px}.field input,.field select,.field textarea{width:100%;padding:12px 13px;border:1px solid #e1e6ee;border-radius:10px;background:#f9fafc;color:var(--text);outline:none;font-size:13px}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--orange);background:#fff}.field textarea{min-height:75px;resize:vertical}
+.form-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}.line-item{display:grid;grid-template-columns:2fr .7fr 1fr auto;gap:8px;align-items:end;margin-bottom:9px}.line-item input{min-width:0;width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;background:#fafbfc;font-size:12px}.line-item label{display:block;font-size:10px;color:var(--muted);margin-bottom:5px}
+.totalbox{background:var(--navy2);color:#fff;border-radius:15px;padding:17px;margin-top:14px}.totalrow{display:flex;justify-content:space-between;padding:7px 0;font-size:12px;color:#d1d8e3}.totalrow.final{border-top:1px solid #43516a;margin-top:7px;padding-top:14px;font-size:14px;font-weight:800;color:#fff}.totalrow.final strong{font-size:23px;color:var(--orange)}
+.searchbar{display:flex;gap:8px;margin-bottom:14px}.searchbar input{flex:1;min-width:0;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:1100px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:9px 8px calc(9px + env(safe-area-inset-bottom));z-index:20}
+.nav-item{background:transparent;color:#929baa;display:grid;justify-items:center;gap:4px;font-size:10px;font-weight:750;padding:3px}.nav-item .nav-icon{font-size:19px}.nav-item.active{color:var(--orange)}
+.modal-back{position:fixed;inset:0;background:rgba(10,18,32,.55);display:none;align-items:center;justify-content:center;padding:18px;z-index:50}.modal-back.show{display:flex}.modal{width:100%;max-width:520px;background:#fff;border-radius:18px;padding:22px;max-height:90vh;overflow:auto}.modal h3{margin-bottom:8px}.modal p{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:15px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}
+.toast{position:fixed;bottom:92px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 17px;border-radius:12px;font-size:12px;box-shadow:var(--shadow);display:none;z-index:60}.toast.show{display:block}
+.footer{text-align:center;color:#a1aab7;font-size:10px;padding:18px}
+@media(max-width:720px){.stats{grid-template-columns:1fr 1fr}.quick{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}.content{padding:20px 14px}.top{padding:18px 18px 23px}.stat strong{font-size:19px}.section-head h2{font-size:18px}}
+@media(max-width:390px){.line-item{grid-template-columns:1fr 1fr}.line-item .wide{grid-column:span 2}.topline{align-items:flex-start}.premium{padding:8px 10px}}
+@media print{body{background:#fff;padding:0}.top,.bottom-nav,.no-print,.footer{display:none!important}.content{padding:0;max-width:none}.page{display:none!important}#quotePrint{display:block!important}.panel{border:0}.print-sheet{padding:24px;color:#111}.print-sheet h1{font-size:25px}.print-sheet .muted{color:#666}.print-sheet table{width:100%;border-collapse:collapse;margin-top:20px}.print-sheet td,.print-sheet th{padding:10px;border-bottom:1px solid #ddd;text-align:left;font-size:12px}.print-total{text-align:right;margin-top:20px;font-size:22px;font-weight:bold}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+ <div class="topline">
+  <div class="brand"><div class="logo">O</div><h1>Orça<span>Pro</span></h1></div>
+  <button class="premium" onclick="premium()">✦ PREMIUM</button>
+ </div>
+ <div class="hello"><small>GESTÃO PROFISSIONAL</small><h2>Trabalhe melhor.<br><span>Lucre mais.</span></h2></div>
+</header>
+<main class="content">
+<section class="page active" id="home">
+ <div class="section-head"><div><h2>Visão geral</h2><div class="sub">Resumo do seu negócio</div></div><button class="btn accent" onclick="newQuote()">＋ Novo orçamento</button></div>
+ <div class="stats">
+  <div class="stat"><div class="label">Orçamentos</div><strong id="statQuotes">0</strong><small>Total registrado</small></div>
+  <div class="stat dark"><div class="label">Lucro estimado</div><strong id="statProfit">R$ 0,00</strong><small>Dos orçamentos salvos</small></div>
+  <div class="stat"><div class="label">Aprovados</div><strong id="statApproved">0</strong><small>Serviços confirmados</small></div>
+  <div class="stat"><div class="label">Em aberto</div><strong id="statPending">0</strong><small>Aguardando cliente</small></div>
+ </div>
+ <div class="quick">
+  <button onclick="newQuote()"><div class="ico">＋</div><b>Novo orçamento</b><small>Calcular preço</small></button>
+  <button onclick="openPage('quotes')"><div class="ico">▤</div><b>Orçamentos</b><small>Ver registros</small></button>
+  <button onclick="openPage('clients')"><div class="ico">♙</div><b>Clientes</b><small>Seus contatos</small></button>
+  <button onclick="exportData()"><div class="ico">⇩</div><b>Backup</b><small>Salvar dados</small></button>
+ </div>
+ <div class="panel"><div class="section-head"><div><h3>Orçamentos recentes</h3><div class="sub">Acompanhe suas últimas propostas</div></div><button class="btn light" onclick="openPage('quotes')">Ver todos →</button></div><div id="recentList"></div></div>
+ <div class="footer">ORÇAPRO • ORGANIZE SEU TRABALHO</div>
+</section>
+
+<section class="page" id="calculator">
+ <div class="section-head"><div><h2 id="calcHeading">Novo orçamento</h2><div class="sub">Monte uma proposta completa para seu cliente</div></div><button class="btn light" onclick="openPage('home')">← Voltar</button></div>
+ <div class="panel">
+  <h3>1. Dados do serviço</h3>
+  <div class="grid2">
+   <div class="field"><label>Nome do projeto / serviço *</label><input id="project" placeholder="Ex.: Instalação de ar-condicionado"></div>
+   <div class="field"><label>Categoria profissional</label><select id="category"><option>Serviços gerais</option><option>Serralheria</option><option>Marcenaria</option><option>Construção e reforma</option><option>Elétrica</option><option>Encanamento</option><option>Pintura</option><option>Mecânica</option><option>Instalação e manutenção</option><option>Design e tecnologia</option><option>Beleza e bem-estar</option><option>Outro</option></select></div>
+   <div class="field"><label>Cliente</label><input id="client" list="clientOptions" placeholder="Nome do cliente"><datalist id="clientOptions"></datalist></div>
+   <div class="field"><label>Telefone / WhatsApp</label><input id="phone" type="tel" placeholder="(00) 00000-0000"></div>
+   <div class="field"><label>Prazo de execução</label><input id="deadline" placeholder="Ex.: 5 dias úteis"></div>
+   <div class="field"><label>Validade da proposta</label><input id="validity" placeholder="Ex.: 7 dias" value="7 dias"></div>
+  </div>
+  <div class="field"><label>Descrição do serviço / observações</label><textarea id="description" placeholder="Descreva o que será entregue, medidas, condições e detalhes..."></textarea></div>
+ </div>
+ <div class="panel">
+  <div class="section-head"><div><h3>2. Materiais e itens</h3><div class="sub">Adicione quantos itens precisar</div></div><button class="btn light" onclick="addItem('materials')">＋ Item</button></div>
+  <div id="materialsList"></div>
+ </div>
+ <div class="panel">
+  <div class="section-head"><div><h3>3. Mão de obra e serviços</h3><div class="sub">Inclua horas, diárias ou serviços</div></div><button class="btn light" onclick="addItem('labor')">＋ Serviço</button></div>
+  <div id="laborList"></div>
+ </div>
+  <div class="panel">
+  <h3>4. Despesas e formação do preço</h3>
+  <div class="grid2">
+   <div class="field"><label>Deslocamento / entrega (R$)</label><input id="travel" type="number" min="0" step=".01" value="0" oninput="recalculate()"></div>
+   <div class="field"><label>Outras despesas (R$)</label><input id="other" type="number" min="0" step=".01" value="0" oninput="recalculate()"></div>
+   <div class="field"><label>Taxas / impostos (%)</label><input id="fees" type="number" min="0" step=".1" value="0" oninput="recalculate()"></div>
+   <div class="field"><label>Margem de lucro sobre o custo (%)</label><input id="margin" type="number" min="0" step=".1" value="30" oninput="recalculate()"></div>
+   <div class="field"><label>Desconto ao cliente (R$)</label><input id="discount" type="number" min="0" step=".01" value="0" oninput="recalculate()"></div>
+   <div class="field"><label>Condição de pagamento</label><select id="payment"><option>À vista</option><option>50% de entrada e 50% na entrega</option><option>30% de entrada e restante na entrega</option><option>Parcelado a combinar</option><option>Outro</option></select></div>
+  </div>
+  <div class="totalbox">
+   <div class="totalrow"><span>Materiais</span><b id="sumMaterials">R$ 0,00</b></div>
+   <div class="totalrow"><span>Mão de obra</span><b id="sumLabor">R$ 0,00</b></div>
+   <div class="totalrow"><span>Despesas adicionais</span><b id="sumExtras">R$ 0,00</b></div>
+   <div class="totalrow"><span>Custo total</span><b id="sumCost">R$ 0,00</b></div>
+   <div class="totalrow"><span>Lucro previsto</span><b id="sumProfit">R$ 0,00</b></div>
+   <div class="totalrow final"><span>PREÇO FINAL</span><strong id="sumSale">R$ 0,00</strong></div>
+  </div>
+  <div class="form-actions"><button class="btn primary" onclick="calculateQuote()">CALCULAR E CONFERIR</button><button class="btn accent" onclick="saveQuote()">SALVAR ORÇAMENTO</button><button class="btn light" onclick="resetForm()">Limpar</button></div>
+ </div>
+</section>
+
+<section class="page" id="quotes">
+ <div class="section-head"><div><h2>Orçamentos</h2><div class="sub">Consulte e gerencie suas propostas</div></div><button class="btn accent" onclick="newQuote()">＋ Novo</button></div>
+ <div class="searchbar"><input id="quoteSearch" placeholder="Buscar por projeto ou cliente..." oninput="renderQuotes()"><select id="statusFilter" onchange="renderQuotes()" style="max-width:145px;border:1px solid var(--line);border-radius:10px;padding:10px"><option value="">Todos</option><option>Pendente</option><option>Aprovado</option><option>Concluído</option><option>Cancelado</option></select></div>
+ <div class="panel"><div id="quotesList"></div></div>
+</section>
+
+<section class="page" id="clients">
+ <div class="section-head"><div><h2>Clientes</h2><div class="sub">Contatos registrados nos seus orçamentos</div></div><button class="btn accent" onclick="addClientPrompt()">＋ Cliente</button></div>
+ <div class="searchbar"><input id="clientSearch" placeholder="Buscar cliente..." oninput="renderClients()"></div>
+ <div class="panel"><div id="clientsList"></div></div>
+</section>
+
+<section class="page" id="settings">
+ <div class="section-head"><div><h2>Configurações</h2><div class="sub">Personalize seus dados e proteja seus registros</div></div></div>
+ <div class="panel"><h3>Dados do profissional / empresa</h3>
+  <div class="grid2">
+   <div class="field"><label>Nome ou razão social</label><input id="businessName" placeholder="Nome da sua empresa"></div>
+   <div class="field"><label>Telefone comercial</label><input id="businessPhone" placeholder="Seu telefone"></div>
+   <div class="field"><label>E-mail</label><input id="businessEmail" type="email" placeholder="contato@empresa.com"></div>
+   <div class="field"><label>CPF / CNPJ (opcional)</label><input id="businessDoc" placeholder="Documento"></div>
+  </div>
+  <button class="btn primary" onclick="saveSettings()">Salvar dados da empresa</button>
+ </div>
+ <div class="panel"><h3>Seus dados</h3><p class="sub" style="margin-bottom:14px">Os registros desta versão ficam armazenados neste dispositivo e navegador. Faça backups regularmente para não perder informações.</p>
+  <div class="form-actions"><button class="btn outline" onclick="exportData()">⇩ Exportar backup</button><label class="btn outline" for="importFile">⇧ Importar backup</label><input id="importFile" type="file" accept="application/json" hidden onchange="importData(event)"></div>
+ </div>
+ <div class="panel"><h3>Sobre o OrçaPro</h3><p class="sub">Versão inicial profissional • Ferramenta de apoio para estimativas. Confira impostos, taxas e custos reais antes de enviar uma proposta.</p></div>
+</section>
+
+<section class="page" id="quotePrint"><div class="print-sheet" id="printContent"></div></section>
+</main>
+<nav class="bottom-nav no-print">
+ <button class="nav-item active" data-page="home" onclick="openPage('home')"><span class="nav-icon">⌂</span>Início</button>
+ <button class="nav-item" data-page="calculator" onclick="newQuote()"><span class="nav-icon">＋</span>Orçamento</button>
+ <button class="nav-item" data-page="quotes" onclick="openPage('quotes')"><span class="nav-icon">▤</span>Registros</button>
+ <button class="nav-item" data-page="settings" onclick="openPage('settings')"><span class="nav-icon">⚙</span>Mais</button>
+</nav>
+</div>
+<div class="modal-back" id="modal"><div class="modal"><h3 id="modalTitle">OrçaPro Premium</h3><p id="modalText"></p><div id="modalExtra"></div><div class="modal-actions"><button class="btn light" onclick="closeModal()">Fechar</button></div></div></div>
+<div class="toast" id="toast"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const money=n=>Number(n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const num=id=>Math.max(0,Number($(id).value)||0);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const read=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
+let quotes=read('orcapro_v2_quotes',read('orcapro_quotes',[])),clients=read('orcapro_clients',[]),settings=read('orcapro_settings',{}),items={materials:[],labor:[]},editingId=null,lastCalc=null;
+
+function persist(){localStorage.setItem('orcapro_v2_quotes',JSON.stringify(quotes));localStorage.setItem('orcapro_clients',JSON.stringify(clients));}
+function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2400)}
+function openPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));$(p).classList.add('active');document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x.dataset.page===p));if(p==='home')dashboard();if(p==='quotes')renderQuotes();if(p==='clients')renderClients();if(p==='settings')loadSettings();window.scrollTo({top:0,behavior:'smooth'})}
+
+function newQuote(){resetForm();openPage('calculator')}
+function itemRow(type,item={name:'',qty:1,price:0}){const idx=items[type].length;items[type].push({...item});renderItems(type);return idx}
+function addItem(type){itemRow(type)}
+
+function renderItems(type){const el=$(type+'List');if(!items[type].length){el.innerHTML='<div class="empty">Nenhum item adicionado. Use o botão acima.</div>';recalculate();return}
+el.innerHTML=items[type].map((it,i)=>`<div class="line-item"><div class="wide"><label>${type==='materials'?'Material / item':'Serviço / atividade'}</label><input value="${esc(it.name)}" placeholder="Descrição" oninput="items.${type}[${i}].name=this.value;recalculate()"></div><div><label>Qtd.</label><input type="number" min="0" step=".01" value="${it.qty}" oninput="items.${type}[${i}].qty=Math.max(0,Number(this.value)||0);recalculate()"></div><div><label>Valor unit. (R$)</label><input type="number" min="0" step=".01" value="${it.price}" oninput="items.${type}[${i}].price=Math.max(0,Number(this.value)||0);recalculate()"></div><button class="btn danger" onclick="items.${type}.splice(${i},1);renderItems('${type}')" aria-label="Remover item">×</button></div>`).join('');recalculate()}
+
+function sums(){const total=a=>a.reduce((s,x)=>s+(Number(x.qty)||0)*(Number(x.price)||0),0);const m=total(items.materials),l=total(items.labor),extra=num('travel')+num('other'),cost=m+l+extra,fee=num('fees')/100,margin=num('margin')/100,discount=num('discount');const saleBefore=fee<1?(cost*(1+margin))/(1-fee):0;const sale=Math.max(0,saleBefore-discount),profit=sale-cost-(sale*fee);return{m,l,extra,cost,fee,margin,discount,sale,profit}}
+
+function recalculate(){if(!$('sumSale'))return;const s=sums();$('sumMaterials').textContent=money(s.m);$('sumLabor').textContent=money(s.l);$('sumExtras').textContent=money(s.extra);$('sumCost').textContent=money(s.cost);$('sumProfit').textContent=money(s.profit);$('sumSale').textContent=money(s.sale)}
+
+function calculateQuote(){if(!$('project').value.trim()){toast('Informe o nome do serviço.');$('project').focus();return}const s=sums();if(num('fees')>=100){toast('Taxas devem ser menores que 100%.');return}lastCalc=s;toast('Cálculo atualizado. Confira o preço final.')}
+
+function formData(){const s=sums();return{project:$('project').value.trim(),category:$('category').value,client:$('client').value.trim(),phone:$('phone').value.trim(),deadline:$('deadline').value.trim(),validity:$('validity').value.trim(),description:$('description').value.trim(),materials:items.materials,labor:items.labor,travel:num('travel'),other:num('other'),fees:num('fees'),margin:num('margin'),discount:num('discount'),payment:$('payment').value,...s}}
+
+function saveQuote(){const q=formData();if(!q.project){toast('Informe o nome do serviço.');$('project').focus();return}if(q.fees>=100){toast('Taxas devem ser menores que 100%.');return}if(!q.client){toast('Informe o cliente para salvar a proposta.');$('client').focus();return}
+if(editingId){const i=quotes.findIndex(x=>x.id===editingId);if(i>=0)quotes[i]={...quotes[i],...q,updated:new Date().toISOString()}}
+else quotes.unshift({...q,id:Date.now().toString(),date:new Date().toISOString(),status:'Pendente'});
+if(q.client&&!clients.some(c=>c.name.toLowerCase()===q.client.toLowerCase()))clients.push({name:q.client,phone:q.phone});
+persist();toast(editingId?'Orçamento atualizado!':'Orçamento salvo!');editingId=null;resetForm();openPage('quotes')}
+
+function resetForm(){editingId=null;items={materials:[],labor:[]};['project','client','phone','deadline','description'].forEach(id=>$(id).value='');$('category').value='Serviços gerais';$('validity').value='7 dias';$('travel').value='0';$('other').value='0';$('fees').value='0';$('margin').value='30';$('discount').value='0';$('payment').selectedIndex=0;$('calcHeading').textContent='Novo orçamento';renderItems('materials');renderItems('labor')}
+
+function editQuote(id){const q=quotes.find(x=>x.id===id);if(!q)return;editingId=id;openPage('calculator');$('calcHeading').textContent='Editar orçamento';['project','category','client','phone','deadline','validity','description','travel','other','fees','margin','discount','payment'].forEach(k=>{if(q[k]!==undefined)$(k).value=q[k]});items={materials:q.materials||[],labor:q.labor||[]};renderItems('materials');renderItems('labor')}
+
+function statusChange(id,value){const q=quotes.find(x=>x.id===id);if(q){q.status=value;persist();dashboard();renderQuotes();toast('Status atualizado.')}}
+function deleteQuote(id){if(!confirm('Excluir este orçamento? Esta ação não pode ser desfeita.'))return;quotes=quotes.filter(q=>q.id!==id);persist();dashboard();renderQuotes();toast('Orçamento excluído.')}
+
+function quoteTable(arr){if(!arr.length)return '<div class="empty">Nenhum orçamento encontrado.</div>';return `<div class="table-wrap"><table class="table"><thead><tr><th>Projeto / cliente</th><th>Data</th><th>Valor</th><th>Status</th><th>Ações</th></tr></thead><tbody>${arr.map(q=>`<tr><td><b>${esc(q.project)}</b><br><span style="color:#8993a5">${esc(q.client||'Sem cliente')}</span></td><td>${new Date(q.date||Date.now()).toLocaleDateString('pt-BR')}</td><td><b>${money(q.sale)}</b><br><span style="color:#159b70">Lucro ${money(q.profit)}</span></td><td><select aria-label="Status" onchange="statusChange('${q.id}',this.value)" style="border:1px solid var(--line);border-radius:8px;padding:6px;font-size:10px"><option ${q.status==='Pendente'?'selected':''}>Pendente</option><option ${q.status==='Aprovado'?'selected':''}>Aprovado</option><option ${q.status==='Concluído'?'selected':''}>Concluído</option><option ${q.status==='Cancelado'?'selected':''}>Cancelado</option></select></td><td><div style="display:flex;gap:5px;flex-wrap:wrap"><button class="btn light" onclick="viewQuote('${q.id}')">Ver</button><button class="btn light" onclick="editQuote('${q.id}')">Editar</button><button class="btn danger" onclick="deleteQuote('${q.id}')">×</button></div></td></tr>`).join('')}</tbody></table></div>`}
+
+function renderQuotes(){const term=($('quoteSearch').value||'').toLowerCase(),st=$('statusFilter').value;const arr=quotes.filter(q=>(!st||q.status===st)&&(`${q.project} ${q.client}`.toLowerCase().includes(term)));$('quotesList').innerHTML=quoteTable(arr)}
+
+function dashboard(){const profit=quotes.reduce((s,q)=>s+(Number(q.profit)||0),0);$('statQuotes').textContent=quotes.length;$('statProfit').textContent=money(profit);$('statApproved').textContent=quotes.filter(q=>['Aprovado','Concluído'].includes(q.status)).length;$('statPending').textContent=quotes.filter(q=>q.status==='Pendente').length;$('recentList').innerHTML=quoteTable(quotes.slice(0,5))}
+
+function renderClients(){const t=($('clientSearch').value||'').toLowerCase();const list=[...clients,...quotes.filter(q=>q.client&&!clients.some(c=>c.name.toLowerCase()===q.client.toLowerCase())).map(q=>({name:q.client,phone:q.phone}))].filter(c=>c.name.toLowerCase().includes(t));$('clientsList').innerHTML=list.length?`<div class="table-wrap"><table class="table"><thead><tr><th>Cliente</th><th>Telefone</th><th>Orçamentos</th></tr></thead><tbody>${list.map(c=>`<tr><td><b>${esc(c.name)}</b></td><td>${esc(c.phone||'—')}</td><td>${quotes.filter(q=>q.client===c.name).length}</td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">Nenhum cliente cadastrado ainda.</div>'; $('clientOptions').innerHTML=list.map(c=>`<option value="${esc(c.name)}">`).join('')}
+
+function addClientPrompt(){const name=prompt('Nome do cliente:');if(!name||!name.trim())return;const phone=prompt('Telefone / WhatsApp (opcional):')||'';clients.push({name:name.trim(),phone});persist();renderClients();toast('Cliente cadastrado.')}
+
+function viewQuote(id){const q=quotes.find(x=>x.id===id);if(!q)return;const biz=settings.name||'Seu negócio';const rows=[...(q.materials||[]).map(x=>({name:x.name,qty:Number(x.qty)||0,price:Number(x.price)||0})),...(q.labor||[]).map(x=>({name:x.name,qty:Number(x.qty)||0,price:Number(x.price)||0}))];if(Number(q.travel)>0)rows.push({name:'Deslocamento / entrega',qty:1,price:Number(q.travel)});if(Number(q.other)>0)rows.push({name:'Outras despesas',qty:1,price:Number(q.other)});const discount=Number(q.discount)||0;$('printContent').innerHTML=`<div style="display:flex;justify-content:space-between;gap:15px;align-items:flex-start"><div><h1>${esc(biz)}</h1><p class="muted">${esc(settings.phone||'')} ${settings.email?' • '+esc(settings.email):''}</p><p class="muted">${settings.doc?'CPF/CNPJ: '+esc(settings.doc):''}</p></div><div style="text-align:right"><h2>ORÇAMENTO</h2><p class="muted">Nº ${esc(q.id)}</p><p class="muted">${new Date(q.date||Date.now()).toLocaleDateString('pt-BR')}</p></div></div><hr style="margin:18px 0;border:0;border-top:1px solid #ddd"><h3>Cliente: ${esc(q.client||'—')}</h3><p class="muted">Telefone: ${esc(q.phone||'Não informado')} • Validade: ${esc(q.validity||'—')}</p><h2 style="margin-top:20px">${esc(q.project)}</h2><p class="muted">${esc(q.category||'')} • Prazo: ${esc(q.deadline||'A combinar')}</p><p style="margin-top:12px">${esc(q.description||'')}</p><table><thead><tr><th>Descrição</th><th>Qtd.</th><th>Valor unit.</th><th>Total</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${esc(x.name||'Item')}</td><td>${x.qty}</td><td>${money(x.price)}</td><td>${money(x.qty*x.price)}</td></tr>`).join('')||'<tr><td colspan="4">Serviço conforme descrição</td></tr>'}</tbody></table>${discount>0?`<p style="text-align:right;margin-top:12px;font-size:12px">Desconto: - ${money(discount)}</p>`:''}<div class="print-total">Total: ${money(q.sale)}</div><p style="text-align:right;margin-top:8px;font-size:12px">Condição: ${esc(q.payment||'A combinar')}</p><p style="margin-top:35px;font-size:12px">Agradecemos a preferência!<br>${esc(biz)}</p><div class="no-print form-actions" style="margin-top:25px"><button class="btn primary" onclick="downloadQuotePDF('${q.id}')">Salvar PDF</button><button class="btn accent" onclick="shareQuote('${q.id}')">Compartilhar PDF / WhatsApp</button><button class="btn light" onclick="openPage('quotes')">Voltar</button></div>`;openPage('quotePrint')}
+
+function quoteMessage(q){const biz=settings.name||'OrçaPro';return `Olá, ${q.client||'tudo bem'}! Segue o orçamento.\n\nServiço: ${q.project}\nValor: ${money(q.sale)}\nPrazo: ${q.deadline||'A combinar'}\nValidade: ${q.validity||'7 dias'}\nPagamento: ${q.payment||'A combinar'}\n\n${q.description||''}\n\nAtenciosamente, ${biz}`}
+
+function buildQuotePDF(q){if(!window.jspdf||!window.jspdf.jsPDF)throw new Error('Biblioteca de PDF indisponível. Verifique sua conexão com a internet e tente novamente.');const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});const left=16,right=194,width=178;let y=18;const biz=settings.name||'Seu negócio';const date=new Date(q.date||Date.now()).toLocaleDateString('pt-BR');const addText=(text,x,yy,max=width,size=10,style='normal')=>{doc.setFont('helvetica',style);doc.setFontSize(size);const lines=doc.splitTextToSize(String(text??''),max);for(const line of lines){if(yy>278){doc.addPage();yy=18}doc.text(line,x,yy);yy+=size*.45+1.8}return yy};doc.setTextColor(16,24,39);doc.setFont('helvetica','bold');doc.setFontSize(19);doc.text(biz,left,y);doc.setFontSize(15);doc.text('ORÇAMENTO',right,y,{align:'right'});y+=8;doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(95,105,120);if(settings.phone)y=addText('Telefone: '+settings.phone,left,y,120,9);if(settings.email)y=addText('E-mail: '+settings.email,left,y,120,9);if(settings.doc)y=addText('CPF/CNPJ: '+settings.doc,left,y,120,9);doc.text('Nº '+String(q.id||''),right,y-8,{align:'right'});doc.text('Data: '+date,right,y-3,{align:'right'});y+=5;doc.setDrawColor(220,224,230);doc.line(left,y,right,y);y+=9;doc.setTextColor(25,32,45);y=addText('CLIENTE: '+(q.client||'—'),left,y,width,11,'bold');y=addText('Telefone: '+(q.phone||'Não informado')+'   |   Validade: '+(q.validity||'—'),left,y,width,9);y+=3;y=addText(q.project,left,y,width,14,'bold');y=addText('Categoria: '+(q.category||'—')+'   |   Prazo: '+(q.deadline||'A combinar'),left,y,width,9);if(q.description){y+=2;y=addText('Descrição: '+q.description,left,y,width,10)}y+=5;const rows=[...(q.materials||[]).map(x=>({name:x.name||'Material',qty:Number(x.qty)||0,price:Number(x.price)||0})),...(q.labor||[]).map(x=>({name:x.name||'Serviço',qty:Number(x.qty)||0,price:Number(x.price)||0}))];if(Number(q.travel)>0)rows.push({name:'Deslocamento / entrega',qty:1,price:Number(q.travel)});if(Number(q.other)>0)rows.push({name:'Outras despesas',qty:1,price:Number(q.other)});doc.setFillColor(240,243,247);doc.rect(left,y,width,8,'F');doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(45,55,70);doc.text('DESCRIÇÃO',left+2,y+5.3);doc.text('QTD.',130,y+5.3,{align:'right'});doc.text('UNITÁRIO',160,y+5.3,{align:'right'});doc.text('TOTAL',right-2,y+5.3,{align:'right'});y+=12;doc.setFont('helvetica','normal');doc.setFontSize(8.5);let subtotal=0;for(const row of rows){const total=row.qty*row.price;subtotal+=total;const desc=doc.splitTextToSize(String(row.name),90);const rowH=Math.max(7,desc.length*4.2+2);if(y+rowH>270){doc.addPage();y=18}doc.setTextColor(40,48,60);doc.text(desc,left+2,y);doc.text(String(row.qty),130,y,{align:'right'});doc.text(money(row.price),160,y,{align:'right'});doc.text(money(total),right-2,y,{align:'right'});y+=rowH;doc.setDrawColor(235,237,241);doc.line(left,y-2,right,y-2)}if(!rows.length)y=addText('Serviço conforme descrição acima.',left,y,width,9);if(Number(q.discount)>0){y+=3;doc.setFont('helvetica','normal');doc.setFontSize(9);doc.text('Desconto: - '+money(q.discount),right,y,{align:'right'});y+=6}if(y>260){doc.addPage();y=18}doc.setFillColor(16,24,39);doc.roundedRect(105,y,width-105,18,2,2,'F');doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text('VALOR TOTAL',110,y+7);doc.setTextColor(255,138,50);doc.setFontSize(15);doc.text(money(q.sale),right-5,y+12,{align:'right'});y+=27;doc.setTextColor(45,55,70);y=addText('Condição de pagamento: '+(q.payment||'A combinar'),left,y,width,9);y+=8;addText('Agradecemos a preferência!',left,y,width,10,'bold');y+=6;addText(biz,left,y,width,9);return doc}
+
+function pdfFileName(q){return ('Orcamento-'+(q.client||q.project||q.id)).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'-').replace(/^-|-$/g,'')+'.pdf'}
+
+function downloadQuotePDF(id){const q=quotes.find(x=>x.id===id);if(!q)return;try{const doc=buildQuotePDF(q);doc.save(pdfFileName(q));toast('PDF gerado. Confira seus downloads.')}catch(err){console.error(err);toast(err.message||'Não foi possível gerar o PDF.')}}
+
+async function shareQuote(id){const q=quotes.find(x=>x.id===id);if(!q)return;const msg=quoteMessage(q);try{const doc=buildQuotePDF(q);const blob=doc.output('blob');const file=new File([blob],pdfFileName(q),{type:'application/pdf'});if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Orçamento - '+q.project,text:msg});toast('Compartilhamento aberto. Escolha o WhatsApp.');return}doc.save(pdfFileName(q));toast('PDF salvo. Abrindo WhatsApp com a mensagem.')}catch(err){if(err&&err.name==='AbortError')return;console.error(err);toast(err.message||'Não foi possível compartilhar o PDF.');return}const phone=(q.phone||'').replace(/\D/g,'');const waPhone=phone?(phone.startsWith('55')?phone:'55'+phone):'';const url=waPhone?`https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`:`https://wa.me/?text=${encodeURIComponent(msg)}`;window.open(url,'_blank')}
+
+function loadSettings(){[['businessName','name'],['businessPhone','phone'],['businessEmail','email'],['businessDoc','doc']].forEach(([id,k])=>$(id).value=settings[k]||'')}
+function saveSettings(){settings={name:$('businessName').value.trim(),phone:$('businessPhone').value.trim(),email:$('businessEmail').value.trim(),doc:$('businessDoc').value.trim()};localStorage.setItem('orcapro_settings',JSON.stringify(settings));toast('Dados da empresa salvos.')}
+
+function exportData(){const data={version:2,quotes,clients,settings};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='backup-orcapro.json';a.click();URL.revokeObjectURL(a.href);toast('Backup exportado.')}
+
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!Array.isArray(d.quotes))throw Error();quotes=d.quotes;clients=Array.isArray(d.clients)?d.clients:[];settings=d.settings||{};persist();localStorage.setItem('orcapro_settings',JSON.stringify(settings));dashboard();toast('Backup importado com sucesso.')}catch{toast('Arquivo inválido. Não foi possível importar.')}};r.readAsText(f);e.target.value=''}
+
+function premium(){$('modalTitle').textContent='OrçaPro Premium';$('modalText').textContent='Estamos preparando recursos avançados, como modelos personalizados de propostas, relatórios financeiros, sincronização entre dispositivos e ferramentas exclusivas. Esta versão ainda não processa assinaturas ou pagamentos.';$('modalExtra').innerHTML='<span class="badge pendente">Em desenvolvimento</span>';$('modal').classList.add('show')}
+function closeModal(){$('modal').classList.remove('show')}
+
+document.addEventListener('input',e=>{if(e.target.id==='client'){const c=clients.find(x=>x.name.toLowerCase()===e.target.value.toLowerCase());if(c&&c.phone)$('phone').value=c.phone}});
+
+renderItems('materials');renderItems('labor');dashboard();loadSettings();
+</script>
+</body>
+</html>
